@@ -10,13 +10,13 @@ import {
 @Route("/auths")
 @Tags("Auth")
 export default class AuthController {
-  @SuccessResponse("201", "Bad Request")
+  @SuccessResponse("201", "Session started")
   @Post("/sessions")
   public static async createTokenController(@Body() body: CreateTokenPayload) {
     return success(await AuthService.createSession(body));
   }
 
-  @SuccessResponse("201", "Bad Request")
+  @SuccessResponse("200", "Session refereshed")
   @Post("/access")
   public static async refreshTokenController(
     @Body() body: RefreshTokenPayload,
@@ -24,7 +24,7 @@ export default class AuthController {
     return success(await AuthService.refreshToken(body.refresh_token));
   }
 
-  @SuccessResponse("201", "Bad Request")
+  @SuccessResponse("200", "OK")
   @Post("/verifiers")
   public static async sendVerificationEmailController(
     @Inject() userId: string,
@@ -32,7 +32,7 @@ export default class AuthController {
     return success(await AuthService.sendVerificationEmail(userId));
   }
 
-  @SuccessResponse("201", "Bad Request")
+  @SuccessResponse("200", "OK")
   @Post("/verify")
   public static async doEmailVerificationController(
     @Inject() userId: string,
